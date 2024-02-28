@@ -4,9 +4,9 @@ const app = Vue.createApp({
             product: 'socks',
             // Solution
             description: 'A warm fuzzy pair of socks.' ,
-            image: './assets/images/socks_green.jpg',
+
             url: "https://www.vuemastery.com",
-            inventory: 100,
+
             onSale: true,
             details: ["50 cotton", "30% wool", "20% polyester"],
             variants:[
@@ -20,8 +20,9 @@ const app = Vue.createApp({
         addToCart(){
             this.cart +=1;
         },
-        updateImage(variantImage){
-            this.image = variantImage;
+        updateVariant(index){
+            this.selectedVariant = index;
+
         },
         removeFromCart(){
             if (this.cart>0){
@@ -31,6 +32,24 @@ const app = Vue.createApp({
             }
            
         }
+    },
+        computed: {
+            title() {
+                return this.brand + ' ' + this.product
+            },
+            image() {
+                return this.variants[this.selectedVariant].image
+            },
+            inStock() {
+                return this.variants[this.selectedVariant].quantity
+            },
+            // solution
+            sale() {
+                if (this.onSale) {
+                    return this.brand + ' ' + this.product + ' is on sale.'
+                }
+                return ''
+            }
     }
 })
 
